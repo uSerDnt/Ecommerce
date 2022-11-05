@@ -2,10 +2,18 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Splash, Onboarding} from './src/screens';
+import {Splash, Onboarding, Cart} from './src/screens';
 import Login from './src/screens/Login';
 import Signup from './src/screens/Signup';
 import Home from './src/screens/Home';
+import Product from './src/screens/Product';
+import Listitem from './src/screens/Listitem';
+import Search from './src/screens/Search';
+import Profile from './src/screens/Profile';
+import Credit from './src/screens/Credit';
+import Addpay from './src/screens/Addpay';
+import OrderN from './src/screens/OrderN';
+import OrderY from './src/screens/OrderY';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,13 +21,12 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        {/* <Stack.Screen name="Splash" component={Splash} /> */}
-        {/* <Stack.Screen name="Onboarding" component={Onboarding} /> */}
-        <Stack.Screen name="Login" component={Home} />
+        <Stack.Screen name="Login" component={OrderY} />
         <Stack.Screen name="Signup" component={Signup} />
       </Stack.Navigator>
     </NavigationContainer>
   );
+  n;
 };
 
 export default App;

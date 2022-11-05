@@ -15,13 +15,10 @@ import Buttons from '../components/Buttons';
 import {useNavigation} from '@react-navigation/native';
 import {color} from 'react-native-reanimated';
 
-// Text, TextInput (placeholder string, placeholderColor string, style={{ radius, backgrud }})
+
 
 const Login = () => {
-  // const [formData, setformData] = useState({
-  //   email: '',
-  //   password: '',
-  // });
+  
   const navigate = useNavigation();
 
   const handleNavigateSignUp = () => {

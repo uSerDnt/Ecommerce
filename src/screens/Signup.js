@@ -37,7 +37,7 @@ const Signup = () => {
               fontWeight: 'bold',
               color: '#0E0E0E',
             }}>
-            Sign in
+            Sign up
           </Text>
         </View>
         <View
@@ -69,8 +69,7 @@ const Signup = () => {
           </View>
           <View
             styles={{
-              flexDirection: 'column',
-              paddingTop: 20,
+              paddingTop: 10,
             }}>
             <View
               style={{
@@ -97,11 +96,11 @@ const Signup = () => {
               style={{
                 paddingLeft: 20,
                 paddingRight: 20,
-                paddingTop: 20,
+                paddingTop: 10,
               }}>
               <Text
                 style={{
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: 'bold',
                   color: Colors.dark,
                 }}>
@@ -118,11 +117,11 @@ const Signup = () => {
               style={{
                 paddingLeft: 20,
                 paddingRight: 20,
-                paddingTop: 20,
+                paddingTop: 10,
               }}>
               <Text
                 style={{
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: 'bold',
                   color: Colors.dark,
                 }}>
@@ -139,11 +138,11 @@ const Signup = () => {
               style={{
                 paddingLeft: 20,
                 paddingRight: 20,
-                paddingTop: 20,
+                paddingTop: 10,
               }}>
               <Text
                 style={{
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: 'bold',
                   color: Colors.dark,
                 }}>
