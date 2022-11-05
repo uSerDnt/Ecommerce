@@ -12,20 +12,14 @@ import React, {useState} from 'react';
 import {Colors} from '../constants/Colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Buttons from '../components/Buttons';
+import {color, ColorSpace} from 'react-native-reanimated';
 import {useNavigation} from '@react-navigation/native';
-import {color} from 'react-native-reanimated';
 
-// Text, TextInput (placeholder string, placeholderColor string, style={{ radius, backgrud }})
-
-const Login = () => {
-  // const [formData, setformData] = useState({
-  //   email: '',
-  //   password: '',
-  // });
+const Signup = () => {
   const navigate = useNavigation();
 
-  const handleNavigateSignUp = () => {
-    navigate.navigate('Signup');
+  const handleNavigateLogin = () => {
+    navigate.navigate('Login');
   };
 
   return (
@@ -111,6 +105,48 @@ const Login = () => {
                   fontWeight: 'bold',
                   color: Colors.dark,
                 }}>
+                First name
+              </Text>
+              <TextInput
+                style={{
+                  backgroundColor: Colors.gray,
+                  borderRadius: 10,
+                }}
+                placeholder="Enter first name"></TextInput>
+            </View>
+            <View
+              style={{
+                paddingLeft: 20,
+                paddingRight: 20,
+                paddingTop: 20,
+              }}>
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: 'bold',
+                  color: Colors.dark,
+                }}>
+                Last name
+              </Text>
+              <TextInput
+                style={{
+                  backgroundColor: Colors.gray,
+                  borderRadius: 10,
+                }}
+                placeholder="Enter last name"></TextInput>
+            </View>
+            <View
+              style={{
+                paddingLeft: 20,
+                paddingRight: 20,
+                paddingTop: 20,
+              }}>
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: 'bold',
+                  color: Colors.dark,
+                }}>
                 Password
               </Text>
               <TextInput
@@ -119,11 +155,18 @@ const Login = () => {
                   borderRadius: 10,
                 }}
                 placeholder="Enter password"></TextInput>
+              <Text
+                style={{
+                  textAlign: 'right',
+                  fontWeight: '800',
+                }}>
+                Must be 10 or more charcters
+              </Text>
             </View>
           </View>
           <View
             style={{
-              paddingTop: 100,
+              paddingTop: 20,
               borderRadius: 10,
               marginHorizontal: 20,
             }}>
@@ -139,7 +182,7 @@ const Login = () => {
                   fontWeight: 'bold',
                   color: Colors.dark,
                 }}>
-                Login
+                Sign up
               </Text>
             </Buttons>
           </View>
@@ -148,14 +191,14 @@ const Login = () => {
               flexDirection: 'row',
               justifyContent: 'center',
             }}>
-            <Text style={{}}>Dont have an account?</Text>
+            <Text>Already have an account?</Text>
             <Text
-              onPress={handleNavigateSignUp}
+              onPress={handleNavigateLogin}
               style={{
                 fontWeight: 'bold',
                 color: Colors.dark,
               }}>
-              Sign up
+              Login
             </Text>
           </View>
         </View>
@@ -164,29 +207,4 @@ const Login = () => {
   );
 };
 
-export default Login;
-
-const styles = StyleSheet.create({
-  input: {
-    position: 'relative',
-    height: '100%',
-    width: '90%',
-    fontFamily: 'OpenSans-Medium',
-    paddingLeft: 20,
-  },
-  social_btn: {
-    height: 55,
-    width: '100%',
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: '#ddd',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  social_img: {
-    width: 25,
-    height: 25,
-    marginLeft: 15,
-  },
-});
+export default Signup;
