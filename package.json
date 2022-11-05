@@ -3,11 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "android": "npx react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "clean-android": "cd android && ./gradlew clean && cd .. && yarn run android",
+    "clean-project": "rm -rf node_modules/ package-lock.json && npm i && cd android && ./gradlew clean"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.11",
