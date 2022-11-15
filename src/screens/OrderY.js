@@ -12,7 +12,15 @@ import {Colors} from '../constants/Colors';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
+
 const OrderY = () => {
+  const [quality, setQuality] = React.useState(1);
+  const handleIncrement = () => {
+    setQuality(e => e + 1);
+  };
+  const handleDecrement = () => {
+    setQuality(e => e - 1);
+  };
   return (
     <View
       style={{
@@ -107,7 +115,7 @@ const OrderY = () => {
               flexDirection: 'row',
               alignItems: 'flex-end',
             }}>
-            <Pressable onPress={() => console.log('click')}>
+            <Pressable onPress={handleDecrement}>
               <View
                 style={{
                   height: 30,
@@ -122,14 +130,21 @@ const OrderY = () => {
             </Pressable>
             <View
               style={{
-                height: 50,
-                weight: 50,
                 justifyContent: 'center',
                 alignItems: 'center',
+                height: 30,
+                width: 30,
               }}>
-              <TextInput></TextInput>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                  color: Colors.dark,
+                }}>
+                {quality}
+              </Text>
             </View>
-            <Pressable onPress={() => console.log('click')}>
+            <Pressable onPress={handleIncrement}>
               <View
                 style={{
                   height: 30,
@@ -139,7 +154,7 @@ const OrderY = () => {
                   alignItems: 'center',
                   borderWidth: 1,
                 }}>
-                <Ionicon name="add" size={20} color="#2b2b2b" />
+                <Ionicon name="add" size={25} color="#2b2b2b" />
               </View>
             </Pressable>
           </View>

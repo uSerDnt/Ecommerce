@@ -2,109 +2,185 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
   Image,
+  TouchableOpacity,
   Pressable,
-  FlatList,
   TextInput,
 } from 'react-native';
 import React from 'react';
 import {Colors} from '../constants/Colors';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Buttons from '../components/Buttons';
-
-const DATA = [
-  {
-    id: 1,
-    name: 'Áo thun',
-    images: 'https://img.lovepik.com/element/40027/2204.png_300.png',
-    size: 'L',
-    price: 120,
-  },
-  {
-    id: 2,
-    name: 'Áo thun',
-    images: 'https://img.lovepik.com/element/40027/2204.png_300.png',
-    size: 'L',
-    price: 120,
-  },
-  {
-    id: 3,
-    name: 'Áo thun',
-    images: 'https://img.lovepik.com/element/40027/2204.png_300.png',
-    size: 'L',
-    price: 120,
-  },
-  {
-    id: 4,
-    name: 'Áo thun',
-    images: 'https://img.lovepik.com/element/40027/2204.png_300.png',
-    size: 'L',
-    price: 120,
-  },
-];
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Feather from 'react-native-vector-icons/Feather';
 
 const Listitem = () => {
-  const renderItem = ({item}) => {
-    <View>
-      <View>
-        <Image
-          style={{
-            height: 120,
-            width: '90%',
-            marginVertical: 10,
-          }}
-          source={{
-            uri: item.images,
-          }}
-        />
-      </View>
-    </View>;
+  const [quality, setQuality] = React.useState(1);
+  const handleIncrement = () => {
+    setQuality(e => e + 1);
   };
-
+  const handleDecrement = () => {
+    setQuality(e => e - 1);
+  };
   return (
-    <FlatList
-      ListHeaderComponent={
+    <View
+      style={{
+        flex: 1,
+        color: Colors.gray,
+        paddingHorizontal: 16,
+      }}>
+      {/* header */}
+      <View
+        style={{
+          flexDirection: 'row',
+          height: 60,
+        }}>
+        <Pressable onPress={() => console.log('click')}>
+          <View
+            style={{
+              position: 'absolute',
+              top: 30 / 2,
+            }}>
+            <Ionicon name="chevron-back" size={30} color="#000000" />
+          </View>
+        </Pressable>
         <View
           style={{
             flex: 1,
-            backgroundColor: Colors.gray,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}>
-          {/* header */}
-          <View
+          <Text
             style={{
-              flexDirection: 'row',
-              paddingHorizontal: 16,
-              alignItems: 'center',
-              height: 50,
-
-              justifyContent: 'center',
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: Colors.dark,
             }}>
-            <Pressable onPress={() => console.log('click')}>
-              <Icon name="chevron-left" size={30} color="#000000" />
-            </Pressable>
+            My Orders
+          </Text>
+        </View>
+      </View>
+      {/* content */}
+      <View
+        style={{
+          flexDirection: 'row',
+          borderRadius: 10,
+          paddingVertical: 20,
+          backgroundColor: 'white',
+        }}>
+        <View>
+          <Image
+            style={{height: 100, width: 100}}
+            resizeMode="center"
+            source={{
+              uri: 'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
+            }}
+          />
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+          }}>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: 'bold',
+              color: Colors.dark,
+            }}>
+            Ao vang
+          </Text>
+          <Text>Size: M</Text>
+
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: 'bold',
+              color: Colors.dark,
+            }}>
+            Thành tiền: 200. 000đ
+          </Text>
+        </View>
+        {/* tanggiam */}
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
+            paddingRight: 6,
+          }}>
+          <Pressable onPress={handleDecrement}>
             <View
               style={{
-                paddingHorizontal: 90,
+                height: 30,
+                width: 30,
+                borderRadius: 6,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderWidth: 1,
               }}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  color: Colors.dark,
-                }}>
-                Lưu tất cả sản phẩm
-              </Text>
+              <Feather name="minus" size={20} color="#2b2b2b" />
             </View>
+          </Pressable>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 30,
+              width: 30,
+            }}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                fontSize: 18,
+                color: Colors.dark,
+              }}>
+              {quality}
+            </Text>
           </View>
+          <Pressable onPress={handleIncrement}>
+            <View
+              style={{
+                height: 30,
+                width: 30,
+                borderRadius: 6,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderWidth: 1,
+              }}>
+              <Ionicon name="add" size={25} color="#2b2b2b" />
+            </View>
+          </Pressable>
         </View>
-      }
-      // columnWrapperStyle={{justifyContent: 'space-between'}}
-      // data={DATA}
-      // renderItem={renderItem}
-      // numColumns={2}
-      // keyExtractor={item => item.id}
-    />
+      </View>
+      {/* button */}
+      <View
+        style={{
+          paddingTop: 20,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <TouchableOpacity
+          onPress={() => console.log('handle')}
+          style={{
+            height: 50,
+            width: '80%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 10,
+            backgroundColor: Colors.primary,
+          }}>
+          <Text
+            style={{
+              color: Colors.dark,
+              fontWeight: 'bold',
+              fontSize: 18,
+            }}>
+            Add card
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 

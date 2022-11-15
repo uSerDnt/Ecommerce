@@ -14,6 +14,8 @@ import Credit from './src/screens/Credit';
 import Addpay from './src/screens/Addpay';
 import OrderN from './src/screens/OrderN';
 import OrderY from './src/screens/OrderY';
+import Voucher from './src/screens/Voucher';
+import Orderinfo from './src/screens/Orderinfo';
 
 const Stack = createNativeStackNavigator();
 
