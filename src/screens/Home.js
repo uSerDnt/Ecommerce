@@ -11,7 +11,7 @@ import React from 'react';
 import {Colors} from '../constants/Colors';
 import Buttons from '../components/Buttons';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+// loadsanpham. dathang
 const DATA = [
   {
     id: 1,
@@ -115,7 +115,8 @@ const Home = () => {
   return (
     <FlatList
       //ListEmptyComponent={<Text>Empty</Text>}
-      ListHeaderComponent={ //??
+      ListHeaderComponent={
+        //??
         <View
           style={{
             flex: 1,

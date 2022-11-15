@@ -14,6 +14,9 @@ import Credit from './src/screens/Credit';
 import Addpay from './src/screens/Addpay';
 import OrderN from './src/screens/OrderN';
 import OrderY from './src/screens/OrderY';
+import OrderScreen from './src/screens/OrderScreen';
+import Voucher from './src/screens/Voucher';
+import Orderinfo from './src/screens/Orderinfo';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +24,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Login" component={OrderY} />
+        <Stack.Screen name="Login" component={OrderScreen} />
         <Stack.Screen name="Signup" component={Signup} />
       </Stack.Navigator>
     </NavigationContainer>

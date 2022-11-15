@@ -11,3 +11,5 @@ export {default as Credit} from './Credit';
 export {default as Addpay} from './Addpay';
 export {default as OrderN} from './OrderN';
 export {default as OrderY} from './OrderY';
+export {default as Voucher} from './Voucher';
+export {default as Orderinfo} from './Orderinfo';
