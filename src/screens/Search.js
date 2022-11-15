@@ -11,7 +11,7 @@ import React from 'react';
 import {Colors} from '../constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Buttons from '../components/Buttons';
-const Search = () => {
+const Search = ({navigation}) => {
   return (
     <View
       style={{
@@ -25,7 +25,10 @@ const Search = () => {
           height: 60,
           justifyContent: 'center',
         }}>
-        <Pressable onPress={() => console.log('click')}>
+        <Pressable
+          onPress={() => {
+            navigation.goBack();
+          }}>
           <View
             style={{
               position: 'absolute',

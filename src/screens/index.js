@@ -13,3 +13,4 @@ export {default as OrderN} from './OrderN';
 export {default as OrderY} from './OrderY';
 export {default as Voucher} from './Voucher';
 export {default as Orderinfo} from './Orderinfo';
+export {default as Bill} from './Bill';

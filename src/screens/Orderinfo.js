@@ -12,7 +12,9 @@ import Buttons from '../components/Buttons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EvilIcon from 'react-native-vector-icons/EvilIcons';
 
-const Orderinfo = () => {
+const Orderinfo = ({navigation, route}) => {
+  const {payment} = route.params;
+  console.log('payment', payment);
   return (
     <View
       style={{
@@ -199,7 +201,7 @@ const Orderinfo = () => {
             //backgroundColor: 'red',
           }}>
           <TouchableOpacity
-            onPress={() => console.log('handle')}
+            onPress={() => navigation.navigate('Home')}
             style={{
               height: 50,
               width: '50%',

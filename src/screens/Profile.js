@@ -3,7 +3,7 @@ import React from 'react';
 import {Colors} from '../constants/Colors';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-const Profile = () => {
+const Profile = ({navigation}) => {
   return (
     <View
       style={{
@@ -15,7 +15,10 @@ const Profile = () => {
           flexDirection: 'row',
           height: 60,
         }}>
-        <Pressable onPress={() => console.log('click')}>
+        <Pressable
+          onPress={() => {
+            navigation.goBack();
+          }}>
           <View
             style={{
               position: 'absolute',

@@ -6,11 +6,25 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Colors} from '../constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Addpay = () => {
+const data = [
+  {
+    name: 'Momo',
+    image:
+      'https://hoabinhairlines.vn/public/frontend/css/images/momo_icon_rectangle.png',
+  },
+  {
+    name: 'Paypal',
+    image:
+      'https://hoabinhairlines.vn/public/frontend/css/images/momo_icon_rectangle.png',
+  },
+];
+const Addpay = ({navigation}) => {
+  const [selected, setSelected] = useState(undefined);
+  // const getDay = new Date().getDay;
   return (
     <View
       style={{
@@ -67,8 +81,43 @@ const Addpay = () => {
           elevation: 9,
           paddingHorizontal: 16,
         }}>
+        {data.map((item, index) => {
+          return (
+            <Pressable onPress={() => setSelected(index)}>
+              <View
+                style={[
+                  {
+                    backgroundColor: 'white',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    marginTop: 40,
+                    marginHorizontal: 40,
+                    height: 50,
+                    justifyContent: 'center',
+                    // borderColor: selected === index ? 'green' : 'black',
+                  },
+                  selected === index
+                    ? {
+                        backgroundColor: 'green',
+                        borderColor: 'yellow',
+                        borderWidth: 2,
+                      }
+                    : null,
+                ]}>
+                <Text>{item.name}</Text>
+                <Image
+                  style={{height: 45, width: 200}}
+                  resizeMode="center"
+                  source={{
+                    uri: item.image,
+                  }}
+                />
+              </View>
+            </Pressable>
+          );
+        })}
         {/* paypal */}
-        <View
+        {/* <View
           style={{
             backgroundColor: 'white',
             borderWidth: 1,
@@ -85,9 +134,9 @@ const Addpay = () => {
               uri: 'https://kieutruong.com/wp-content/uploads/2019/11/huong-dan-dang-ky-tai-khoan-paypal-1024x512.jpg',
             }}
           />
-        </View>
+        </View> */}
         {/* momo */}
-        <View
+        {/* <View
           style={{
             backgroundColor: 'white',
             borderWidth: 1,
@@ -104,9 +153,9 @@ const Addpay = () => {
               uri: 'https://hoabinhairlines.vn/public/frontend/css/images/momo_icon_rectangle.png',
             }}
           />
-        </View>
+        </View> */}
         {/* zalopay */}
-        <View
+        {/* <View
           style={{
             backgroundColor: 'white',
             borderWidth: 1,
@@ -123,14 +172,18 @@ const Addpay = () => {
               uri: 'http://idgv.vn/Event/RetailBanking/wp-content/uploads/2022/03/ZaloPay_color_hoz.png',
             }}
           />
-        </View>
+        </View> */}
         {/* button */}
         <View
           style={{
             paddingTop: 50,
           }}>
           <TouchableOpacity
-            onPress={() => console.log('handle')}
+            onPress={() =>
+              navigation.navigate('Orderinfo', {
+                payment: typeof selected !== 'undefined' ? data[selected] : {},
+              })
+            }
             style={{
               height: 50,
               width: '100%',
