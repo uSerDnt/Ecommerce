@@ -10,13 +10,17 @@ import {
 import React from 'react';
 import {Colors} from '../constants/Colors';
 import Buttons from '../components/Buttons';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import Product from './Product';
+
 // loadsanpham. dathang
 const DATA = [
   {
     id: 1,
     name: 'Áo thun',
-    images: 'https://img.lovepik.com/element/40027/2204.png_300.png',
+    images:
+      'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
     price: 120,
     rating: 4.7,
   },
@@ -45,7 +49,7 @@ const DATA = [
     rating: 4.7,
   },
 ];
-const Home = () => {
+const Home = ({navigation}) => {
   const renderItem = ({item}) => {
     return (
       <View
@@ -55,22 +59,25 @@ const Home = () => {
           backgroundColor: 'white',
           width: '45%',
         }}>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Image
+        <TouchableOpacity onPress={() => navigation.navigate('Product', item)}>
+          <View
             style={{
-              height: 120,
-              width: '90%',
-              marginVertical: 10,
-            }}
-            source={{
-              uri: item.images,
-            }}
-          />
-        </View>
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              style={{
+                height: 120,
+                width: '90%',
+                marginVertical: 10,
+                resizeMode: 'contain',
+              }}
+              source={{
+                uri: item.images,
+              }}
+            />
+          </View>
+        </TouchableOpacity>
         <Text
           style={{
             color: Colors.dark,
@@ -78,7 +85,7 @@ const Home = () => {
           {item.name}
         </Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Icon name="star" size={16} color={Colors.primary} />
+          <FontAwesome name="star" size={16} color={Colors.primary} />
           <Text style={{fontWeight: 'bold', color: Colors.dark}}>
             {item.rating}
           </Text>
@@ -89,7 +96,7 @@ const Home = () => {
 
           <TouchableOpacity
             activeOpacity={0.9}
-            onPress={() => console.log('click')}
+            onPress={() => navigation.navigate('Bill')}
             style={{
               height: 30,
               backgroundColor: Colors.primary,
@@ -98,7 +105,11 @@ const Home = () => {
               alignItems: 'center',
               flexDirection: 'row',
             }}>
-            <Icon name="heart-o" size={16} style={{marginHorizontal: 8}} />
+            <FontAwesome
+              name="heart-o"
+              size={16}
+              style={{marginHorizontal: 8}}
+            />
             <Text
               style={{
                 color: Colors.dark,
@@ -114,13 +125,12 @@ const Home = () => {
   };
   return (
     <FlatList
-      //ListEmptyComponent={<Text>Empty</Text>}
       ListHeaderComponent={
-        //??
         <View
           style={{
             flex: 1,
             backgroundColor: Colors.gray,
+            marginHorizontal: 10,
           }}>
           <View
             style={{
@@ -139,29 +149,33 @@ const Home = () => {
           <View
             style={{
               flexDirection: 'row',
-              width: '100%',
-
-              //marginHorizontal: 20,
+              flex: 1,
+              justifyContent: 'space-between',
+              paddingBottom: 6,
             }}>
             <TextInput
               style={{
                 backgroundColor: Colors.white,
                 borderRadius: 10,
+                height: 40,
                 flex: 1,
-                height: 50,
               }}
               placeholder="Find product"
             />
-            <View style={{width: 50, marginLeft: 10}}>
-              <Buttons
+            <TouchableOpacity onPress={() => console.log('click')}>
+              <View
                 style={{
                   alignItems: 'center',
                   justifyContent: 'center',
                   backgroundColor: Colors.primary,
+                  borderRadius: 10,
+                  height: 40,
+                  width: 40,
+                  marginLeft: 6,
                 }}>
-                <Icon name="filter" size={30} />
-              </Buttons>
-            </View>
+                <Ionicon name="search" size={30} />
+              </View>
+            </TouchableOpacity>
           </View>
           <Image
             style={{

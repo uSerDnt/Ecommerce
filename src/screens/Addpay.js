@@ -10,7 +10,7 @@ import React from 'react';
 import {Colors} from '../constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Addpay = () => {
+const Addpay = ({navigation}) => {
   return (
     <View
       style={{
@@ -130,7 +130,7 @@ const Addpay = () => {
             paddingTop: 50,
           }}>
           <TouchableOpacity
-            onPress={() => console.log('handle')}
+            onPress={() => navigation.navigate('Orderinfo')}
             style={{
               height: 50,
               width: '100%',

@@ -2,18 +2,18 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  TouchableOpacity,
   Pressable,
+  TouchableOpacity,
   TextInput,
   FlatList,
+  Image,
 } from 'react-native';
 import React from 'react';
-import {Colors} from '../constants/Colors';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import ItemOrder from './OrderScreen/ItemOrder';
+import {Colors} from '../constants/Colors';
+import {color} from 'react-native-reanimated';
 
 const data = [
   {
@@ -30,35 +30,10 @@ const data = [
     name: 'Ao vang',
     size: 'M',
     price: '200. 000',
-    amount: 1,
-  },
-  {
-    image:
-      'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
-    name: 'Ao vang',
-    size: 'M',
-    price: '200. 000',
-    amount: 1,
-  },
-  {
-    image:
-      'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
-    name: 'Ao vang',
-    size: 'M',
-    price: '200. 000',
-    amount: 1,
-  },
-  {
-    image:
-      'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
-    name: 'Ao vang',
-    size: 'M',
-    price: '200. 000',
-    amount: 1,
+    amount: 3,
   },
 ];
-
-const Listitem = () => {
+const Bill = ({navigation}) => {
   const [quality, setQuality] = React.useState(1);
   const handleIncrement = () => {
     setQuality(e => e + 1);
@@ -82,7 +57,10 @@ const Listitem = () => {
           flexDirection: 'row',
           height: 60,
         }}>
-        <Pressable onPress={() => console.log('click')}>
+        <Pressable
+          onPress={() => {
+            navigation.goBack();
+          }}>
           <View
             style={{
               position: 'absolute',
@@ -104,7 +82,7 @@ const Listitem = () => {
               fontWeight: 'bold',
               color: Colors.dark,
             }}>
-            My Orders
+            My Cart
           </Text>
         </View>
       </View>
@@ -112,7 +90,7 @@ const Listitem = () => {
       <FlatList
         data={data}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(item, index) => `${item.size}${index.toString()}`}
+        keyExtractor={(item, index) => `${item.name}${index.toString()}`}
         renderItem={(item, position) => {
           return (
             <View
@@ -201,39 +179,105 @@ const Listitem = () => {
           );
         }}
       />
-
-      {/* button */}
+      {/* Voucher */}
       <View
         style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'flex-end',
+          flexDirection: 'row',
+          marginHorizontal: 20,
           paddingBottom: 10,
         }}>
-        <TouchableOpacity
-          onPress={() => console.log('handle')}
+        <TextInput
           style={{
-            height: 50,
-            width: '80%',
-            justifyContent: 'center',
-            alignItems: 'center',
+            backgroundColor: Colors.white,
             borderRadius: 10,
-            backgroundColor: Colors.primary,
-          }}>
-          <Text
+            flex: 1,
+            height: 40,
+          }}
+          placeholder="Promo code"></TextInput>
+        <TouchableOpacity>
+          <View
             style={{
-              color: Colors.dark,
-              fontWeight: 'bold',
-              fontSize: 18,
+              backgroundColor: Colors.primary,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: Colors.primary,
+              borderRadius: 10,
+              height: 40,
+              width: 80,
+              marginLeft: 6,
             }}>
-            Add card
-          </Text>
+            <Text
+              style={{
+                fontSize: 13,
+                fontWeight: 'bold',
+                color: Colors.dark,
+              }}>
+              Apply
+            </Text>
+          </View>
         </TouchableOpacity>
+      </View>
+      {/* tongthanhtoan */}
+      <View
+        style={{
+          backgroundColor: 'white',
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 4,
+          },
+          shadowOpacity: 0.32,
+          shadowRadius: 5.46,
+          flex: 1,
+          elevation: 9,
+        }}>
+        <View
+          style={{
+            flex: 1,
+            paddingHorizontal: 20,
+            paddingTop: 20,
+            justifyContent: 'space-between',
+          }}>
+          <Text>Tong cong</Text>
+          <Text>Tong tien</Text>
+          <Text>Tong tien</Text>
+          <Text>Tong tien</Text>
+        </View>
+        <View
+          style={{
+            // backgroundColor: 'red',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            height: 50,
+          }}>
+            {/* buttonThanhtoan */}
+          <TouchableOpacity onPress={() => navigation.navigate("Addpay")}>
+            <View
+              style={{
+                height: 50,
+                width: 100,
+                justifyContent: 'center',
+                backgroundColor: Colors.primary,
+                borderRadius: 10,
+                alignItems: 'center',
+              }}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                }}>
+                Check out
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 };
 
-export default Listitem;
+export default Bill;
 
 const styles = StyleSheet.create({});

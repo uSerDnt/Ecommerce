@@ -1,24 +1,67 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  Image,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import {StyleSheet, Text, View, Pressable, Image, FlatList} from 'react-native';
 import React from 'react';
 import {Colors} from '../constants/Colors';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
+import {ScrollView} from 'react-native-gesture-handler';
 
+const data = [
+  {
+    image:
+      'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
+    name: 'Ao vang',
+    orderDate: '11/11/2022',
+    status: 'Đang giao',
+    price: '200. 000',
+    amount: 1,
+  },
+  {
+    image:
+      'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
+    name: 'Ao vang',
+    orderDate: '11/11/2022',
+    status: 'Đang giao',
+    price: '200. 000',
+    amount: 1,
+  },
+  {
+    image:
+      'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
+    name: 'Ao vang',
+    orderDate: '11/11/2022',
+    status: 'Đang giao',
+    price: '200. 000',
+    amount: 1,
+  },
+  {
+    image:
+      'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
+    name: 'Ao vang',
+    orderDate: '11/11/2022',
+    status: 'Đang giao',
+    price: '200. 000',
+    amount: 1,
+  },
+  {
+    image:
+      'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
+    name: 'Ao vang',
+    orderDate: '11/11/2022',
+    status: 'Đang giao',
+    price: '200. 000',
+    amount: 1,
+  },
+];
 const OrderY = () => {
   const [quality, setQuality] = React.useState(1);
   const handleIncrement = () => {
     setQuality(e => e + 1);
   };
   const handleDecrement = () => {
+    if (quality === 1) {
+      return;
+    }
     setQuality(e => e - 1);
   };
   return (
@@ -60,106 +103,218 @@ const OrderY = () => {
           </Text>
         </View>
       </View>
+
       {/* content */}
-      <View
-        style={{
-          flexDirection: 'row',
-          borderRadius: 10,
-          paddingVertical: 20,
-          backgroundColor: 'white',
-        }}>
-        <View>
-          <Image
-            style={{height: 100, width: 100}}
-            resizeMode="center"
-            source={{
-              uri: 'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
-            }}
-          />
-        </View>
-        <View>
-          <Text>Ao vang</Text>
-          <Text>Mã đơn hàng: 001</Text>
-          <Text>Ngày đặt hàng: 11/11/2022</Text>
-          <Text>Tình trạng: Đang giao</Text>
-          <Text>Thành tiền: 200. 000đ</Text>
-        </View>
-        <View
-          style={{
-            height: 120,
-          }}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-            }}>
-            <Pressable onPress={() => console.log('click')}>
+      <FlatList
+        data={data}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item, index) => `${item.orderDate}${index.toString()}`}
+        renderItem={(item, position) => {
+          return (
+            <View
+              key={position}
+              style={{
+                flexDirection: 'row',
+                borderRadius: 10,
+                paddingVertical: 10,
+                backgroundColor: 'white',
+                marginBottom: 10,
+              }}>
+              <Image
+                style={{height: 100, width: 100}}
+                resizeMode="center"
+                source={{
+                  uri: 'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
+                }}
+              />
+              <View style={{flex: 1}}>
+                <Text>{item.name}</Text>
+                <Text>Mã đơn hàng: 001</Text>
+                <Text>Ngày đặt hàng: {item.orderDate}</Text>
+                <Text>Tình trạng: {item.status}</Text>
+                <Text>Thành tiền: {item.price}đ </Text>
+              </View>
+
               <View
                 style={{
-                  height: 70,
-                  width: 30,
-                  borderRadius: 10,
-                  backgroundColor: Colors.primary,
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  width: 70,
                 }}>
-                <MaterialIcon name="navigate-next" size={30} color="#2b2b2b" />
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    marginRight: 10,
+                  }}>
+                  <Pressable onPress={() => console.log('click')}>
+                    <View
+                      style={{
+                        height: 70,
+                        width: 30,
+                        borderRadius: 10,
+                        backgroundColor: Colors.primary,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <MaterialIcon
+                        name="navigate-next"
+                        size={30}
+                        color="#2b2b2b"
+                      />
+                    </View>
+                  </Pressable>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    alignItems: 'flex-end',
+                    marginRight: 10,
+                  }}>
+                  <Pressable onPress={handleDecrement}>
+                    <View
+                      style={{
+                        height: 20,
+                        width: 20,
+                        borderRadius: 6,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 1,
+                      }}>
+                      <Feather name="minus" size={18} color="#2b2b2b" />
+                    </View>
+                  </Pressable>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: 18,
+                      color: Colors.dark,
+                      marginHorizontal: 4,
+                    }}>
+                    {quality}
+                  </Text>
+                  <Pressable onPress={handleIncrement}>
+                    <View
+                      style={{
+                        height: 20,
+                        width: 20,
+                        borderRadius: 6,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 1,
+                      }}>
+                      <Ionicon name="add" size={18} color="#2b2b2b" />
+                    </View>
+                  </Pressable>
+                </View>
               </View>
-            </Pressable>
-          </View>
-          {/* tanggiam */}
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'flex-end',
-            }}>
-            <Pressable onPress={handleDecrement}>
-              <View
-                style={{
-                  height: 30,
-                  width: 30,
-                  borderRadius: 6,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderWidth: 1,
-                }}>
-                <Feather name="minus" size={20} color="#2b2b2b" />
-              </View>
-            </Pressable>
+            </View>
+          );
+        }}
+      />
+
+      {/* <ScrollView>
+        {data.map((item, index) => {
+          return (
             <View
               style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 30,
-                width: 30,
+                flexDirection: 'row',
+                borderRadius: 10,
+                paddingVertical: 10,
+                backgroundColor: 'white',
               }}>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: 18,
-                  color: Colors.dark,
-                }}>
-                {quality}
-              </Text>
-            </View>
-            <Pressable onPress={handleIncrement}>
+              <Image
+                style={{height: 100, width: 100}}
+                resizeMode="center"
+                source={{
+                  uri: 'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
+                }}
+              />
+              <View style={{flex: 1}}>
+                <Text>{item.name}</Text>
+                <Text>Mã đơn hàng: 001</Text>
+                <Text>Ngày đặt hàng: {item.orderDate}</Text>
+                <Text>Tình trạng: {item.status}</Text>
+                <Text>Thành tiền: {item.price}đ </Text>
+              </View>
+
               <View
                 style={{
-                  height: 30,
-                  width: 30,
-                  borderRadius: 6,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderWidth: 1,
+                  width: 70,
                 }}>
-                <Ionicon name="add" size={25} color="#2b2b2b" />
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    marginRight: 10,
+                  }}>
+                  <Pressable onPress={() => console.log('click')}>
+                    <View
+                      style={{
+                        height: 70,
+                        width: 30,
+                        borderRadius: 10,
+                        backgroundColor: Colors.primary,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <MaterialIcon
+                        name="navigate-next"
+                        size={30}
+                        color="#2b2b2b"
+                      />
+                    </View>
+                  </Pressable>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    alignItems: 'flex-end',
+                    marginRight: 10,
+                  }}>
+                  <Pressable onPress={handleDecrement}>
+                    <View
+                      style={{
+                        height: 20,
+                        width: 20,
+                        borderRadius: 6,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 1,
+                      }}>
+                      <Feather name="minus" size={18} color="#2b2b2b" />
+                    </View>
+                  </Pressable>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: 18,
+                      color: Colors.dark,
+                      marginHorizontal: 4,
+                    }}>
+                    {quality}
+                  </Text>
+                  <Pressable onPress={handleIncrement}>
+                    <View
+                      style={{
+                        height: 20,
+                        width: 20,
+                        borderRadius: 6,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 1,
+                      }}>
+                      <Ionicon name="add" size={18} color="#2b2b2b" />
+                    </View>
+                  </Pressable>
+                </View>
               </View>
-            </Pressable>
-          </View>
-        </View>
-      </View>
+            </View>
+          );
+        })}
+      </ScrollView> */}
     </View>
   );
 };

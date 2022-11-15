@@ -9,7 +9,11 @@ import {
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../constants/Colors';
-const Product = () => {
+import {useNavigation} from '@react-navigation/native';
+import ItemOrder from './ListScreen/ListOrder';
+const Product = ({Home}) => {
+  const navigation = useNavigation();
+
   return (
     <View style={{flex: 1, backgroundColor: Colors.gray}}>
       {/* Header */}
@@ -22,7 +26,10 @@ const Product = () => {
           height: 50,
           //   backgroundColor: 'red',
         }}>
-        <Pressable onPress={() => console.log('click')}>
+        <Pressable
+          onPress={() => {
+            navigation.navigate('Home');
+          }}>
           <Icon name="chevron-left" size={30} color="#000000" />
         </Pressable>
         <Text
@@ -232,8 +239,9 @@ const Product = () => {
             </Text>
           </View>
           <View>
+            {/* Button */}
             <TouchableOpacity
-              onPress={() => console.log('handle')}
+              onPress={() => navigation.navigate('Bill')}
               style={{
                 height: 50,
                 width: 160,
