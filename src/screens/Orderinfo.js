@@ -12,7 +12,9 @@ import Buttons from '../components/Buttons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EvilIcon from 'react-native-vector-icons/EvilIcons';
 
-const Orderinfo = ({navigation}) => {
+const Orderinfo = ({navigation, route}) => {
+  const {payment} = route.params;
+  console.log('payment', payment);
   return (
     <View
       style={{
@@ -26,7 +28,7 @@ const Orderinfo = ({navigation}) => {
           height: 60,
           justifyContent: 'center',
         }}>
-        <Pressable onPress={() => console.log('click')}>
+        <Pressable onPress={() => navigation.goBack()}>
           <View
             style={{
               position: 'absolute',
@@ -167,12 +169,15 @@ const Orderinfo = ({navigation}) => {
             borderWidth: 1,
             borderRadius: 10,
             marginTop: 10,
-            // justifyContent: 'space-around',
+            justifyContent: 'space-around',
             flexDirection: 'row',
             paddingVertical: 10,
             paddingHorizontal: 10,
           }}>
-          <View>
+          <View
+            style={{
+              absolute: 'position',
+            }}>
             <MaterialCommunityIcon
               name="credit-card-outline"
               size={30}
@@ -182,11 +187,11 @@ const Orderinfo = ({navigation}) => {
           <View>
             <Text
               style={{
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: '400',
                 color: Colors.dark,
               }}>
-              Phương thức thanh toán: Momo
+              Phương thức thanh toán: {payment.name}
             </Text>
           </View>
         </View>

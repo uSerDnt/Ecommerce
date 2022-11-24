@@ -27,82 +27,82 @@ const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
-function MyTabs() {
-  return (
-    <Tab.Navigator screenOptions={{headerShown: false, tabBarShowLabel: false}}>
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <Ionicons
-              name="home-outline"
-              color={focused ? '#FFBD5A' : '#000000'}
-              size={30}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Search"
-        component={Search}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <Ionicons
-              name="search-outline"
-              color={focused ? '#FFBD5A' : '#000000'}
-              size={30}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Heart"
-        component={ListScreen}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <Ionicons
-              name="heart-outline"
-              color={focused ? '#FFBD5A' : '#000000'}
-              size={30}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Cart"
-        component={Bill}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <Ionicons
-              name="cart-outline"
-              color={focused ? '#FFBD5A' : '#000000'}
-              size={30}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <MaterialCommunityIcons
-              name="account-circle-outline"
-              color={focused ? '#FFBD5A' : '#000000'}
-              size={30}
-            />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
-}
+// function MyTabs() {
+//   return (
+//     <Tab.Navigator screenOptions={{headerShown: false, tabBarShowLabel: false}}>
+//       <Tab.Screen
+//         name="Home"
+//         component={Home}
+//         options={{
+//           tabBarIcon: ({focused}) => (
+//             <Ionicons
+//               name="home-outline"
+//               color={focused ? '#FFBD5A' : '#000000'}
+//               size={30}
+//             />
+//           ),
+//         }}
+//       />
+//       <Tab.Screen
+//         name="Search"
+//         component={Search}
+//         options={{
+//           tabBarIcon: ({focused}) => (
+//             <Ionicons
+//               name="search-outline"
+//               color={focused ? '#FFBD5A' : '#000000'}
+//               size={30}
+//             />
+//           ),
+//         }}
+//       />
+//       <Tab.Screen
+//         name="Heart"
+//         component={ListScreen}
+//         options={{
+//           tabBarIcon: ({focused}) => (
+//             <Ionicons
+//               name="heart-outline"
+//               color={focused ? '#FFBD5A' : '#000000'}
+//               size={30}
+//             />
+//           ),
+//         }}
+//       />
+//       <Tab.Screen
+//         name="Cart"
+//         component={Bill}
+//         options={{
+//           tabBarIcon: ({focused}) => (
+//             <Ionicons
+//               name="cart-outline"
+//               color={focused ? '#FFBD5A' : '#000000'}
+//               size={30}
+//             />
+//           ),
+//         }}
+//       />
+//       <Tab.Screen
+//         name="Profile"
+//         component={Profile}
+//         options={{
+//           tabBarIcon: ({focused}) => (
+//             <MaterialCommunityIcons
+//               name="account-circle-outline"
+//               color={focused ? '#FFBD5A' : '#000000'}
+//               size={30}
+//             />
+//           ),
+//         }}
+//       />
+//     </Tab.Navigator>
+//   );
+// }
 const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Login" component={MyTabs} />
+        <Stack.Screen name="Login" component={Credit} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="Product" component={Product} />
         <Stack.Screen name="Bill" component={Bill} />

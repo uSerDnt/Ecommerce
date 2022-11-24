@@ -6,14 +6,29 @@ import {
   Pressable,
   Image,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import ItemOrder from './ListScreen/ListOrder';
-const Product = ({Home}) => {
+const Product = ({Home, route}) => {
   const navigation = useNavigation();
-
+  //const {name, images, price} = route.params.product;
+  const [selected, setSelected] = useState(undefined);
+  const data = [
+    {
+      size: 'XL',
+    },
+    {
+      size: 'L',
+    },
+    {
+      size: 'M',
+    },
+    {
+      size: 'S',
+    },
+  ];
   return (
     <View style={{flex: 1, backgroundColor: Colors.gray}}>
       {/* Header */}
@@ -67,7 +82,7 @@ const Product = ({Home}) => {
           }}
           resizeMode="contain"
           source={{
-            uri: 'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
+            uri: images,
           }}
         />
       </View>
@@ -75,87 +90,45 @@ const Product = ({Home}) => {
       <View
         style={{
           flexDirection: 'row',
-          // paddingHorizontal: 100,
-          // justifyContent: 'space-between',
-
-          paddingTop: 20,
-
-          alignSelf: 'center',
+          paddingVertical: 10,
+          paddingHorizontal: 50,
+          justifyContent: 'space-around',
         }}>
-        <TouchableOpacity
-          onPress={() => console.log('handle')}
-          style={{
-            height: 40,
-            width: 40,
-            justifyContent: 'center',
-            alignItems: 'center',
-
-            borderRadius: 20,
-            backgroundColor: Colors.primary,
-          }}>
-          <Text
-            style={{
-              color: Colors.dark,
-            }}>
-            XL
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => console.log('handle')}
-          style={{
-            height: 40,
-            width: 40,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginLeft: 10,
-
-            borderRadius: 20,
-            backgroundColor: Colors.primary,
-          }}>
-          <Text
-            style={{
-              color: Colors.dark,
-            }}>
-            L
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => console.log('handle')}
-          style={{
-            height: 40,
-            width: 40,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginLeft: 10,
-            borderRadius: 20,
-            backgroundColor: Colors.primary,
-          }}>
-          <Text
-            style={{
-              color: Colors.dark,
-            }}>
-            M
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => console.log('handle')}
-          style={{
-            height: 40,
-            width: 40,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginLeft: 10,
-            borderRadius: 20,
-            backgroundColor: Colors.primary,
-          }}>
-          <Text
-            style={{
-              color: Colors.dark,
-            }}>
-            S
-          </Text>
-        </TouchableOpacity>
+        {data.map((item, index) => {
+          return (
+            <TouchableOpacity
+              onPress={() => setSelected(index)}
+              style={[
+                {
+                  height: 40,
+                  width: 40,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 20,
+                  backgroundColor: Colors.primary,
+                },
+                selected === index
+                  ? {
+                      height: 40,
+                      width: 40,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      borderRadius: 20,
+                      backgroundColor: Colors.white,
+                    }
+                  : null,
+              ]}>
+              <Text
+                style={{
+                  color: Colors.dark,
+                }}>
+                {item.size}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
       </View>
+
       {/* mo ta */}
       <View
         style={{
@@ -241,7 +214,9 @@ const Product = ({Home}) => {
           <View>
             {/* Button */}
             <TouchableOpacity
-              onPress={() => navigation.navigate('Bill')}
+              onPress={() =>
+                navigation.navigate('Bill', {product: route.params.product})
+              }
               style={{
                 height: 50,
                 width: 160,

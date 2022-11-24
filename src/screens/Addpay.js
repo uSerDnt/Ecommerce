@@ -6,11 +6,31 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Colors} from '../constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+const data = [
+  {
+    name: 'Paypal',
+    image:
+      'https://kieutruong.com/wp-content/uploads/2019/11/huong-dan-dang-ky-tai-khoan-paypal-1024x512.jpg',
+  },
+  {
+    name: 'Momo',
+    image:
+      'https://hoabinhairlines.vn/public/frontend/css/images/momo_icon_rectangle.png',
+  },
+  {
+    name: 'Zalopay',
+    image:
+      'http://idgv.vn/Event/RetailBanking/wp-content/uploads/2022/03/ZaloPay_color_hoz.png',
+  },
+];
 const Addpay = ({navigation}) => {
+  const [selected, setSelected] = useState(undefined);
+  
+  // const getDay = new Date().getDay;
   return (
     <View
       style={{
@@ -24,7 +44,7 @@ const Addpay = ({navigation}) => {
           height: 60,
           justifyContent: 'center',
         }}>
-        <Pressable onPress={() => console.log('click')}>
+        <Pressable onPress={() => navigation.goBack()}>
           <View
             style={{
               position: 'absolute',
@@ -67,70 +87,56 @@ const Addpay = ({navigation}) => {
           elevation: 9,
           paddingHorizontal: 16,
         }}>
-        {/* paypal */}
-        <View
-          style={{
-            backgroundColor: 'white',
-            borderWidth: 1,
-            borderRadius: 10,
-            marginTop: 40,
-            marginHorizontal: 40,
-            height: 50,
-            justifyContent: 'center',
-          }}>
-          <Image
-            style={{height: 45, width: 200}}
-            resizeMode="center"
-            source={{
-              uri: 'https://kieutruong.com/wp-content/uploads/2019/11/huong-dan-dang-ky-tai-khoan-paypal-1024x512.jpg',
-            }}
-          />
-        </View>
-        {/* momo */}
-        <View
-          style={{
-            backgroundColor: 'white',
-            borderWidth: 1,
-            borderRadius: 10,
-            marginTop: 30,
-            marginHorizontal: 40,
-            height: 50,
-            justifyContent: 'center',
-          }}>
-          <Image
-            style={{height: 40, width: 200}}
-            resizeMode="center"
-            source={{
-              uri: 'https://hoabinhairlines.vn/public/frontend/css/images/momo_icon_rectangle.png',
-            }}
-          />
-        </View>
-        {/* zalopay */}
-        <View
-          style={{
-            backgroundColor: 'white',
-            borderWidth: 1,
-            borderRadius: 10,
-            marginTop: 30,
-            marginHorizontal: 40,
-            height: 50,
-            justifyContent: 'center',
-          }}>
-          <Image
-            style={{height: 40, width: 200}}
-            resizeMode="center"
-            source={{
-              uri: 'http://idgv.vn/Event/RetailBanking/wp-content/uploads/2022/03/ZaloPay_color_hoz.png',
-            }}
-          />
-        </View>
-        {/* button */}
+        {data.map((item, index) => {
+          return (
+            <Pressable onPress={() => setSelected(index)}>
+              <View
+                style={[
+                  {
+                    backgroundColor: 'white',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    marginTop: 40,
+                    marginHorizontal: 40,
+                    height: 50,
+                    justifyContent: 'center',
+                    // borderColor: selected === index ? 'green' : 'black',
+                  },
+                  selected === index
+                    ? {
+                        backgroundColor: Colors.primary,
+                        borderColor: 'yellow',
+                        borderWidth: 2,
+                        borderRadius: 10,
+                        marginTop: 40,
+                        marginHorizontal: 40,
+                        height: 50,
+                        justifyContent: 'center',
+                      }
+                    : null,
+                ]}>
+                <Image
+                  style={{height: 40, width: 200}}
+                  resizeMode="center"
+                  source={{
+                    uri: item.image,
+                  }}
+                />
+              </View>
+            </Pressable>
+          );
+        })}
+
         <View
           style={{
             paddingTop: 50,
           }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Orderinfo')}
+            onPress={() =>
+              navigation.navigate('Orderinfo', {
+                payment: typeof selected !== 'undefined' ? data[selected] : {},
+              })
+            }
             style={{
               height: 50,
               width: '100%',
