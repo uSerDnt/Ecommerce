@@ -1,69 +1,25 @@
+import {useNavigation} from '@react-navigation/native';
+import React, {useContext} from 'react';
 import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  TouchableOpacity,
-  TextInput,
   FlatList,
   Image,
+  Pressable,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Text,
 } from 'react-native';
-import React, {useEffect, useState, useContext, createContext} from 'react';
-import Ionicon from 'react-native-vector-icons/Ionicons';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 import {Colors} from '../constants/Colors';
-import {color} from 'react-native-reanimated';
-import {ShopContext} from '../context/ShopContext';
-import {create} from 'react-test-renderer';
+import ShopContext from '../context/ShopContext';
+import ProductItem from './ProductItem';
 
-// const data = [
-//   {
-//     image:
-//       'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
-//     name: 'Ao vang',
-//     size: 'M',
-//     price: '200. 000',
-//     amount: 3,
-//   },
-//   {
-//     image:
-//       'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
-//     name: 'Ao vang',
-//     size: 'M',
-//     price: '200. 000',
-//     amount: 3,
-//   },
-// ];
+const Bill = () => {
+  const navigation = useNavigation();
+  const {products, addProductToCart, cart} = useContext(ShopContext);
 
-// redux
-
-const Bill = ({navigation}) => {
-  const [quality, setQuality] = React.useState(1);
-  // const [carts, setCarts] = useState([]);
-  const [product, setProduct] = useState(product);
-  const context = createContext();
-  // const context = useContext(ShopContext);
-
-  useEffect(() => {
-    if (typeof product === 'undefined') return;
-
-    const newArr = carts.concat(product);
-
-    setCarts(newArr);
-  }, [product]);
-
-  // console.log('product', carts);
-
-  const handleIncrement = () => {
-    setQuality(e => e + 1);
-  };
-  const handleDecrement = () => {
-    if (quality === 1) {
-      return;
-    }
-    setQuality(e => e - 1);
-  };
   return (
     <View
       style={{
@@ -108,104 +64,15 @@ const Bill = ({navigation}) => {
       </View>
       {/* content */}
 
-      {context => (
-        <React.Fragment>
-          {context.cart.map(product => (
-            <FlatList
-              data={GlobalState.product}
-              showsVerticalScrollIndicator={false}
-              keyExtractor={(product, id) => `key-${index.toString()}`}
-              renderItem={({product, id}) => {
-                return (
-                  <View
-                    key={index}
-                    style={{
-                      flexDirection: 'row',
-                      borderRadius: 10,
-                      paddingVertical: 20,
-                      backgroundColor: 'white',
-                      marginBottom: 10,
-                    }}>
-                    <View>
-                      <Image
-                        style={{height: 100, width: 100}}
-                        resizeMode="center"
-                        source={{
-                          uri: cartItem.images,
-                        }}
-                      />
-                    </View>
-                    <View
-                      style={{
-                        flex: 1,
-                      }}>
-                      <Text>{cartItem.name}</Text>
-                      <Text>Size: M</Text>
-                      <Text>Thành tiền: {cartItem.price}đ</Text>
-                    </View>
-                    {/* tanggiam */}
-                    <View
-                      style={{
-                        width: 70,
-                      }}>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'flex-end',
-                          marginRight: 10,
-                        }}></View>
-                      <View
-                        style={{
-                          flex: 1,
-                          flexDirection: 'row',
-                          justifyContent: 'flex-end',
-                          alignItems: 'flex-end',
-                          marginRight: 10,
-                        }}>
-                        <Pressable onPress={handleDecrement}>
-                          <View
-                            style={{
-                              height: 20,
-                              width: 20,
-                              borderRadius: 6,
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              borderWidth: 1,
-                            }}>
-                            <Feather name="minus" size={18} color="#2b2b2b" />
-                          </View>
-                        </Pressable>
-                        <Text
-                          style={{
-                            fontWeight: 'bold',
-                            fontSize: 18,
-                            color: Colors.dark,
-                            marginHorizontal: 4,
-                          }}>
-                          {quality}
-                        </Text>
-                        <Pressable onPress={handleIncrement}>
-                          <View
-                            style={{
-                              height: 20,
-                              width: 20,
-                              borderRadius: 6,
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              borderWidth: 1,
-                            }}>
-                            <Ionicon name="add" size={18} color="#2b2b2b" />
-                          </View>
-                        </Pressable>
-                      </View>
-                    </View>
-                  </View>
-                );
-              }}
-            />
-          ))}
-        </React.Fragment>
-      )}
+      <FlatList
+        data={cart}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item, index) => `key-${index.toString()}`}
+        renderItem={({item, index}) => {
+          console.log('vitem', item);
+          return <ProductItem item={item} />;
+        }}
+      />
 
       {/* Voucher */}
       <View
@@ -307,5 +174,3 @@ const Bill = ({navigation}) => {
 };
 
 export default Bill;
-
-const styles = StyleSheet.create({});

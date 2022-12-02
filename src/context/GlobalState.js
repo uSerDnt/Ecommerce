@@ -1,6 +1,12 @@
 import React, {useState, useReducer} from 'react';
 import ShopContext from './ShopContext';
-import {shopReducer, ADD_PRODUCT, REMOVE_PRODUCT} from './reducers';
+import {
+  shopReducer,
+  ADD_PRODUCT,
+  REMOVE_PRODUCT,
+  DECREMENT_QUANTITY,
+  INCREMENT_QUANTITY,
+} from './reducer';
 
 function GlobalState(props) {
   const products = [
@@ -47,13 +53,20 @@ function GlobalState(props) {
     dispatch({type: REMOVE_PRODUCT, productId: productId});
   };
 
+  const increment = (productId, quantity) => {
+    dispatch({type: INCREMENT_QUANTITY, payload: {productId, quantity}});
+  };
+  const decrement = (productId, quantity) => {
+    dispatch({type: DECREMENT_QUANTITY, payload: {productId, quantity}});
+  };
   return (
     <ShopContext.Provider
       value={{
         products: products,
-        cart: cartState.cart,
+        cart: cartState?.cart,
         addProductToCart: addProductToCart,
         removeProductFromCart: removeProductFromCart,
+        incrementFromCart: increment,
       }}>
       {props.children}
     </ShopContext.Provider>
