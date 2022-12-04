@@ -1,6 +1,6 @@
 import React, {useState, useReducer} from 'react';
 import ShopContext from './ShopContext';
-import {shopReducer, ADD_PRODUCT, REMOVE_PRODUCT} from './reducers';
+import {shopReducer, ADD_PRODUCT, REMOVE_PRODUCT} from './reducer';
 
 function GlobalState(props) {
   const products = [
@@ -51,7 +51,7 @@ function GlobalState(props) {
     <ShopContext.Provider
       value={{
         products: products,
-        cart: cartState.cart,
+        cart: cartState?.cart,
         addProductToCart: addProductToCart,
         removeProductFromCart: removeProductFromCart,
       }}>
