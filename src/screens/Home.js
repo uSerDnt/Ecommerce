@@ -6,6 +6,7 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import React, {useContext} from 'react';
 import {Colors} from '../constants/Colors';
@@ -57,12 +58,13 @@ const Home = ({navigation, props}) => {
   const renderItem = ({item}) => (
     <View
       style={{
-        margin: 10,
         borderRadius: 10,
         backgroundColor: 'white',
-        width: '45%',
+        marginRight: 16,
+        minWidth: Dimensions.get('window').width / 2 - 24,
       }}>
-      <TouchableOpacity onPress={() => navigation.navigate('Product')}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Product', {productId: item.id})}>
         <View
           style={{
             justifyContent: 'center',
@@ -81,50 +83,61 @@ const Home = ({navigation, props}) => {
           />
         </View>
       </TouchableOpacity>
-      <Text
+      <View
         style={{
-          color: Colors.dark,
+          marginHorizontal: 12,
         }}>
-        {item.name}
-      </Text>
-      {/* rating */}
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <FontAwesome name="star" size={16} color={Colors.primary} />
-        <Text style={{fontWeight: 'bold', color: Colors.dark}}>
-          {item.rating}
-        </Text>
-      </View>
-
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={styles.price}>{item.price} đ</Text>
-
-        <TouchableOpacity
-          activeOpacity={0.9}
-          onPress={() => addProductToCart(item)}
-          // onPress={() =>
-          //   // navigation.navigate(
-          //   //   'Bill',
-          //   //   context.addProductToCart.bind(this, product),
-          //   // )
-          // }
+        <Text
           style={{
-            height: 30,
-            backgroundColor: Colors.primary,
-            flex: 1,
-            borderRadius: 10,
-            alignItems: 'center',
-            flexDirection: 'row',
+            color: Colors.dark,
           }}>
-          <FontAwesome name="heart-o" size={16} style={{marginHorizontal: 8}} />
-          <Text
-            style={{
-              color: Colors.dark,
-              fontWeight: 'bold',
-              fontSize: 12,
-            }}>
-            Add Cart
+          {item.name}
+        </Text>
+        {/* rating */}
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <FontAwesome name="star" size={16} color={Colors.primary} />
+          <Text style={{fontWeight: 'bold', color: Colors.dark}}>
+            {item.rating}
           </Text>
-        </TouchableOpacity>
+        </View>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <Text style={styles.price}>{item.price} đ</Text>
+
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => addProductToCart(item)}
+            // onPress={() =>
+            //   // navigation.navigate(
+            //   //   'Bill',
+            //   //   context.addProductToCart.bind(this, product),
+            //   // )
+            // }
+            style={{
+              height: 30,
+              backgroundColor: Colors.primary,
+              // flex: 1,
+              borderRadius: 10,
+              alignItems: 'center',
+              flexDirection: 'row',
+              paddingHorizontal: 8,
+            }}>
+            <FontAwesome name="heart-o" size={16} />
+            <Text
+              style={{
+                color: Colors.dark,
+                fontWeight: 'bold',
+                fontSize: 12,
+                marginLeft: 8,
+              }}>
+              Add Cart
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -217,8 +230,11 @@ const Home = ({navigation, props}) => {
           </View>
         </View>
       }
-      columnWrapperStyle={{justifyContent: 'space-between'}}
+      columnWrapperStyle={{marginTop: 20}}
       data={products}
+      contentContainerStyle={{
+        marginLeft: 16,
+      }}
       renderItem={renderItem}
       numColumns={2}
       keyExtractor={item => item.id}

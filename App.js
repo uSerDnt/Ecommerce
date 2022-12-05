@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, focused} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -23,12 +23,14 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import GlobalState from './src/context/GlobalState';
+import ShopContext from './src/context/ShopContext';
 
 const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
+  const {cart} = useContext(ShopContext);
   return (
     <Tab.Navigator screenOptions={{headerShown: false, tabBarShowLabel: false}}>
       <Tab.Screen
@@ -75,11 +77,27 @@ function MyTabs() {
         component={Bill}
         options={{
           tabBarIcon: ({focused}) => (
-            <Ionicons
-              name="cart-outline"
-              color={focused ? '#FFBD5A' : '#000000'}
-              size={30}
-            />
+            <View>
+              <Ionicons
+                name="cart-outline"
+                color={focused ? '#FFBD5A' : '#000000'}
+                size={30}
+              />
+              <View
+                style={{
+                  width: 20,
+                  height: 20,
+                  backgroundColor: 'red',
+                  borderRadius: 100,
+                  position: 'absolute',
+                  top: -6,
+                  right: -6,
+                }}>
+                <Text style={{textAlign: 'center', color: 'white'}}>
+                  {cart.length}
+                </Text>
+              </View>
+            </View>
           ),
         }}
       />

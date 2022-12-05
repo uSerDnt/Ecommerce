@@ -7,11 +7,14 @@ import {
   Button,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import {Colors} from '../constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Buttons from '../components/Buttons';
+import ShopContext from '../context/ShopContext';
 const Search = ({navigation}) => {
+  const {products, addProductToCart, cart} = useContext(ShopContext);
+  console.log('products', cart);
   return (
     <View
       style={{

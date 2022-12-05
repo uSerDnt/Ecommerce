@@ -1,72 +1,176 @@
+import {useNavigation} from '@react-navigation/native';
+import React, {useContext} from 'react';
 import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  TouchableOpacity,
-  TextInput,
   FlatList,
   Image,
+  Pressable,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Text,
 } from 'react-native';
-import React, {useEffect, useState, useContext, createContext} from 'react';
-import Ionicon from 'react-native-vector-icons/Ionicons';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 import {Colors} from '../constants/Colors';
-import {color} from 'react-native-reanimated';
-import {ShopContext} from '../context/ShopContext';
-import {create} from 'react-test-renderer';
+import ShopContext from '../context/ShopContext';
+import ProductItem from './ProductItem';
 
-// const data = [
-//   {
-//     image:
-//       'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
-//     name: 'Ao vang',
-//     size: 'M',
-//     price: '200. 000',
-//     amount: 3,
-//   },
-//   {
-//     image:
-//       'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
-//     name: 'Ao vang',
-//     size: 'M',
-//     price: '200. 000',
-//     amount: 3,
-//   },
-// ];
-
-// redux
-
-const Bill = ({navigation}) => {
-  const [quality, setQuality] = React.useState(1);
+const Bill = () => {
+  const navigation = useNavigation();
   const {products, addProductToCart, cart} = useContext(ShopContext);
-  // const [carts, setCarts] = useState([]);
-  // const [product, setProduct] = useState(product);
-  // const context = useContext(ShopContext);
 
-  // useEffect(() => {
-  //   if (typeof product === 'undefined') return;
+  return (
+    <View
+      style={{
+        flex: 1,
+        color: Colors.gray,
+        paddingHorizontal: 16,
+      }}>
+      {/* header */}
+      <View
+        style={{
+          flexDirection: 'row',
+          height: 60,
+        }}>
+        <Pressable
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <View
+            style={{
+              position: 'absolute',
+              top: 30 / 2,
+            }}>
+            <Ionicon name="chevron-back" size={30} color="#000000" />
+          </View>
+        </Pressable>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: Colors.dark,
+            }}>
+            My Cart
+          </Text>
+        </View>
+      </View>
+      {/* content */}
 
-  //   const newArr = carts.concat(product);
+      <FlatList
+        data={cart}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item, index) => `key-${index.toString()}`}
+        renderItem={({item, index}) => {
+          console.log('vitem', item);
+          return <ProductItem item={item} />;
+        }}
+      />
 
-  //   setCarts(newArr);
-  // }, [product]);
-
-  // console.log('product', carts);
-
-  const handleIncrement = () => {
-    setQuality(e => e + 1);
-  };
-  const handleDecrement = () => {
-    if (quality === 1) {
-      return;
-    }
-    setQuality(e => e - 1);
-  };
-  return <></>;
+      {/* Voucher */}
+      <View
+        style={{
+          flexDirection: 'row',
+          marginHorizontal: 20,
+          paddingBottom: 10,
+        }}>
+        <TextInput
+          style={{
+            backgroundColor: Colors.white,
+            borderRadius: 10,
+            flex: 1,
+            height: 40,
+          }}
+          placeholder="Promo code"></TextInput>
+        <TouchableOpacity>
+          <View
+            style={{
+              backgroundColor: Colors.primary,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: Colors.primary,
+              borderRadius: 10,
+              height: 40,
+              width: 80,
+              marginLeft: 6,
+            }}>
+            <Text
+              style={{
+                fontSize: 13,
+                fontWeight: 'bold',
+                color: Colors.dark,
+              }}>
+              Apply
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      {/* tongthanhtoan */}
+      <View
+        style={{
+          backgroundColor: 'white',
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 4,
+          },
+          shadowOpacity: 0.32,
+          shadowRadius: 5.46,
+          flex: 1,
+          elevation: 9,
+        }}>
+        <View
+          style={{
+            flex: 1,
+            paddingHorizontal: 20,
+            paddingTop: 20,
+            justifyContent: 'space-between',
+          }}>
+          <Text>Tong cong</Text>
+          <Text>Tong tien</Text>
+          <Text>Tong tien</Text>
+          <Text>Tong tien</Text>
+        </View>
+        <View
+          style={{
+            // backgroundColor: 'red',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            height: 50,
+          }}>
+          {/* buttonThanhtoan */}
+          <TouchableOpacity onPress={() => navigation.navigate('Addpay')}>
+            <View
+              style={{
+                height: 50,
+                width: 100,
+                justifyContent: 'center',
+                backgroundColor: Colors.primary,
+                borderRadius: 10,
+                alignItems: 'center',
+              }}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                }}>
+                Check out
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
 };
 
 export default Bill;
-
-const styles = StyleSheet.create({});

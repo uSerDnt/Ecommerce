@@ -6,14 +6,19 @@ import {
   Pressable,
   Image,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import ItemOrder from './ListScreen/ListOrder';
+import ShopContext from '../context/ShopContext';
 const Product = ({Home, route}) => {
+  const {productId} = route.params;
+
   const navigation = useNavigation();
-  //const {name, images, price} = route.params.product;
+  const {products} = useContext(ShopContext);
+  const findProduct = products.find(e => e.id === productId);
+  const {name, price, images} = findProduct || {};
   const [selected, setSelected] = useState(undefined);
   const data = [
     {
@@ -94,7 +99,7 @@ const Product = ({Home, route}) => {
           paddingHorizontal: 50,
           justifyContent: 'space-around',
         }}>
-        {data.map((item, index) => {
+        {/* {data.map((item, index) => {
           return (
             <TouchableOpacity
               onPress={() => setSelected(index)}
@@ -126,7 +131,7 @@ const Product = ({Home, route}) => {
               </Text>
             </TouchableOpacity>
           );
-        })}
+        })} */}
       </View>
 
       {/* mo ta */}
