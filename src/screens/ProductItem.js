@@ -8,8 +8,13 @@ import ShopContext from '../context/ShopContext';
 const ProductItem = props => {
   const {item} = props || {};
   const [quantity, setQuantity] = useState(item.quantity);
-  const {products, addProductToCart, incrementFromCart, removeProductFromCart} =
-    useContext(ShopContext);
+  const {
+    products,
+    addProductToCart,
+    incrementFromCart,
+    removeProductFromCart,
+    decrementFromCart,
+  } = useContext(ShopContext);
 
   useEffect(() => {
     console.log('useEffect');
@@ -17,7 +22,7 @@ const ProductItem = props => {
   }, [item.quantity]);
 
   const handleIncrement = () => {
-    console.log('setState');
+    // console.log('setState');
     setQuantity(e => e + 1);
     incrementFromCart(item.id, quantity);
   };
@@ -25,8 +30,9 @@ const ProductItem = props => {
     if (quantity === 1) {
       return removeProductFromCart(item.id);
     }
+    // console.log('setState');
     setQuantity(e => e - 1);
-    // incrementFromCart(item.id, quantity);
+    decrementFromCart(item.id, quantity);
   };
   return (
     <View

@@ -67,6 +67,7 @@ function GlobalState(props) {
         addProductToCart: addProductToCart,
         removeProductFromCart: removeProductFromCart,
         incrementFromCart: increment,
+        decrementFromCart: decrement,
       }}>
       {props.children}
     </ShopContext.Provider>

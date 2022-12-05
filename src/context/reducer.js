@@ -40,7 +40,18 @@ const incrementFromCart = (payload, state) => {
   updatedCart[updatedItemIndex] = updatedItem;
   return {...state, cart: updatedCart};
 };
-
+const decrementFromCart = (payload, state) => {
+  const updatedCart = [...state.cart];
+  const updatedItemIndex = updatedCart.findIndex(
+    item => item.id === payload.productId,
+  );
+  const updatedItem = {
+    ...updatedCart[updatedItemIndex],
+  };
+  updatedItem.quantity = payload.quantity - 1;
+  updatedCart[updatedItemIndex] = updatedItem;
+  return {...state, cart: updatedCart};
+};
 const removeProductFromCart = (productId, state) => {
   console.log('remove product: ' + productId);
   const updatedCart = [...state.cart];
@@ -58,7 +69,6 @@ const removeProductFromCart = (productId, state) => {
 
   return {...state, cart: updatedCart};
 };
-
 const initialState = {
   cart: [],
 };
@@ -74,7 +84,8 @@ export const shopReducer = (state, action) => {
 
     case INCREMENT_QUANTITY:
       return incrementFromCart(action.payload, state);
-
+    case DECREMENT_QUANTITY:
+      return decrementFromCart(action.payload, state);
     default:
       return state;
   }
