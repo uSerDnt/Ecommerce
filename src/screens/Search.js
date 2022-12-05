@@ -7,19 +7,29 @@ import {
   Button,
   TouchableOpacity,
 } from 'react-native';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Colors} from '../constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Buttons from '../components/Buttons';
 import ShopContext from '../context/ShopContext';
-const Search = ({navigation}) => {
+import {SearchBar} from 'react-native-element';
+import react from 'react';
+import SearchFilter from '../components/SearchFilter';
+const Search = ({navigation, value, onChangeText}) => {
   const {products, addProductToCart, cart} = useContext(ShopContext);
-  console.log('products', cart);
+  console.log('products', products);
+  const [input, setInput] = useState('');
+  console.log(input);
+  // const onChangeText = text => {
+  //   setSearchTerm(text);
+  //   fetchProductList(0, text);
+  // };
   return (
     <View
       style={{
         flex: 1,
         backgroundColor: Colors.gray,
+        marginHorizontal: 16,
       }}>
       {/* header */}
       <View
@@ -69,6 +79,7 @@ const Search = ({navigation}) => {
             width: 0,
             height: 4,
           },
+          height: 44,
           shadowOpacity: 0.32,
           shadowRadius: 5.46,
           elevation: 9,
@@ -76,22 +87,14 @@ const Search = ({navigation}) => {
         }}>
         <Icon name="search" size={20} style={styles.icon} />
         <TextInput
+          value={input}
+          onChangeText={text => setInput(text)}
           style={{fontSize: 14, color: Colors.dark, fontWeight: '600', flex: 1}}
           placeholder="Search any thing"
           placeholderTextColor="#d6d9df"
         />
-        <Pressable>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              color: Colors.dark,
-              fontSize: 14,
-              marginRight: 10,
-            }}>
-            Search
-          </Text>
-        </Pressable>
       </View>
+      <SearchFilter data={products} input={input} setInput={setInput} />
     </View>
   );
 };

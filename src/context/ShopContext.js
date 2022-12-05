@@ -40,4 +40,5 @@ export default React.createContext({
   addProductToCart: product => {},
   removeProductFromCart: productId => {},
   incrementFromCart: (payload, quantity) => {},
+  decrementFromCart: (payload, quantity) => {},
 });

@@ -111,12 +111,6 @@ const Home = ({navigation, props}) => {
           <TouchableOpacity
             activeOpacity={0.9}
             onPress={() => addProductToCart(item)}
-            // onPress={() =>
-            //   // navigation.navigate(
-            //   //   'Bill',
-            //   //   context.addProductToCart.bind(this, product),
-            //   // )
-            // }
             style={{
               height: 30,
               backgroundColor: Colors.primary,

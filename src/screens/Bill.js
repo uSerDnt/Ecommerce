@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -13,13 +13,47 @@ import {
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import {Colors} from '../constants/Colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import ShopContext from '../context/ShopContext';
 import ProductItem from './ProductItem';
 
 const Bill = () => {
   const navigation = useNavigation();
-  const {products, addProductToCart, cart} = useContext(ShopContext);
+  const {products, addProductToCart, cart: cartProp} = useContext(ShopContext);
+  const [cart, setCart] = useState(cartProp);
+  let sumReduce = cart.reduce(function (previousValue, currentValue) {
+    return previousValue + currentValue.quantity * currentValue.price;
+  }, 0);
+  useEffect(() => {
+    setCart(cartProp);
+  }, [cartProp]);
 
+  const saveMyOrderHistory = async () => {
+    const getMyOrder = await AsyncStorage.getItem('@MyOrder');
+    const parseMyOrder = JSON.parse(getMyOrder) || [];
+
+    // const saveMyOrder = await AsyncStorage.setItem('@MyOrder', JSON.stringify())
+  };
+  useEffect(() => {
+    const saveMyOrderHistory = async item => {
+      const getMyOrder = await AsyncStorage.getItem('@MyOrder');
+      const parseMyOrder = JSON.parse(getMyOrder) || [];
+      console.log('parseMyOrder', parseMyOrder);
+      parseMyOrder.push({item: 'test'});
+      await AsyncStorage.setItem('@MyOrder', JSON.stringify(parseMyOrder));
+    };
+    saveMyOrderHistory();
+    // const getCart = async () => {
+    //   const carts = await AsyncStorage.getItem('@MyCart');
+    //   const partCart = JSON.parse(carts);
+    //   if(carts) {
+    //     setCart(partCart);
+    //     return;
+    //   }
+    // }
+    // getCart();
+  }, []);
+  console.log('sumReduce', sumReduce);
   return (
     <View
       style={{
@@ -63,13 +97,12 @@ const Bill = () => {
         </View>
       </View>
       {/* content */}
-
       <FlatList
         data={cart}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => `key-${index.toString()}`}
         renderItem={({item, index}) => {
-          console.log('vitem', item);
+          //  console.log('vitem', item);
           return <ProductItem item={item} />;
         }}
       />
@@ -125,20 +158,53 @@ const Bill = () => {
           },
           shadowOpacity: 0.32,
           shadowRadius: 5.46,
-          flex: 1,
           elevation: 9,
         }}>
         <View
           style={{
-            flex: 1,
             paddingHorizontal: 20,
             paddingTop: 20,
             justifyContent: 'space-between',
+
+            flexDirection: 'row',
           }}>
-          <Text>Tong cong</Text>
-          <Text>Tong tien</Text>
-          <Text>Tong tien</Text>
-          <Text>Tong tien</Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 17,
+            }}>
+            Vận chuyển:
+          </Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 17,
+            }}>
+            0
+          </Text>
+        </View>
+        <View
+          style={{
+            paddingHorizontal: 20,
+            paddingTop: 20,
+            justifyContent: 'space-between',
+
+            flexDirection: 'row',
+          }}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 17,
+            }}>
+            Tổng cộng:
+          </Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 17,
+            }}>
+            {sumReduce}
+          </Text>
         </View>
         <View
           style={{
