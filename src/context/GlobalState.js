@@ -6,43 +6,10 @@ import {
   REMOVE_PRODUCT,
   DECREMENT_QUANTITY,
   INCREMENT_QUANTITY,
+  GET_ALL_PRODUCT,
 } from './reducer';
 
 function GlobalState(props) {
-  const products = [
-    {
-      id: 1,
-      name: 'Áo thun vàng',
-      images:
-        'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
-      price: 120,
-      rating: 4.5,
-    },
-    {
-      id: 2,
-      name: 'Áo thun đen',
-      images:
-        'https://tse4.mm.bing.net/th?id=OIP.bJ48jmA9X9y9bIiN6VBARgHaII&pid=Api&P=0',
-      price: 120,
-      rating: 2.0,
-    },
-    {
-      id: 3,
-      name: 'Áo khoác',
-      images:
-        'https://tse2.mm.bing.net/th?id=OIP.W4c_pkm0jjlf8KvJt_BCXgHaHa&pid=Api&P=0',
-      price: 120,
-      rating: 4.5,
-    },
-    {
-      id: 4,
-      name: 'Áo nam',
-      images:
-        'https://tse3.mm.bing.net/th?id=OIP.oxk-NL-1_JfJUXFenTSzVAHaHK&pid=Api&P=0',
-      price: 120,
-      rating: 4.0,
-    },
-  ];
   const [cartState, dispatch] = useReducer(shopReducer, {cart: []});
 
   const addProductToCart = product => {
@@ -59,11 +26,15 @@ function GlobalState(props) {
   const decrement = (productId, quantity) => {
     dispatch({type: DECREMENT_QUANTITY, payload: {productId, quantity}});
   };
+  const getAllProduct = products => {
+    dispatch({type: GET_ALL_PRODUCT, payload: products});
+  };
   return (
     <ShopContext.Provider
       value={{
-        products: products,
+        products: cartState?.products,
         cart: cartState?.cart,
+        getAllProduct: getAllProduct,
         addProductToCart: addProductToCart,
         removeProductFromCart: removeProductFromCart,
         incrementFromCart: increment,

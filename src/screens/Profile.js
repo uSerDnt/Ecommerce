@@ -74,9 +74,9 @@ const Profile = ({navigation}) => {
               width: 50,
               borderRadius: 25,
             }}
-            resizeMode="cover"
+            resizeMode="contain"
             source={{
-              uri: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60',
+              uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fGF2YXRhciUyMHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
             }}
           />
           <View
@@ -132,7 +132,7 @@ const Profile = ({navigation}) => {
           </Text>
           <View
             style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
-            <Pressable onPress={() => console.log('click icon edit')}>
+            <Pressable onPress={() => navigation.navigate('MyOrder')}>
               <MaterialIcon name="navigate-next" size={30} />
             </Pressable>
           </View>
@@ -156,7 +156,7 @@ const Profile = ({navigation}) => {
           </Text>
           <View
             style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
-            <Pressable onPress={() => console.log('click icon edit')}>
+            <Pressable onPress={() => navigation.navigate('Voucher')}>
               <MaterialIcon name="navigate-next" size={30} />
             </Pressable>
           </View>

@@ -4,34 +4,25 @@ import Feather from 'react-native-vector-icons/Feather';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import {Colors} from '../constants/Colors';
 import ShopContext from '../context/ShopContext';
-const ProductItem = props => {
+
+const MyOrderItem = props => {
   const {item} = props || {};
   const [quantity, setQuantity] = useState(item.quantity);
-  const {
-    products,
-    addProductToCart,
-    incrementFromCart,
-    removeProductFromCart,
-    decrementFromCart,
-  } = useContext(ShopContext);
-
   useEffect(() => {
     console.log('useEffect');
     setQuantity(item.quantity);
   }, [item.quantity]);
 
   const handleIncrement = () => {
-    // console.log('setState');
     setQuantity(e => e + 1);
-    incrementFromCart(item?.id, quantity);
+    incrementFromCart(item.id, quantity);
   };
   const handleDecrement = () => {
     if (quantity === 1) {
-      return removeProductFromCart(item?.id);
+      return removeProductFromCart(item.id);
     }
-    // console.log('setState');
     setQuantity(e => e - 1);
-    decrementFromCart(item?.id, quantity);
+    decrementFromCart(item.id, quantity);
   };
   return (
     <View
@@ -47,7 +38,7 @@ const ProductItem = props => {
           style={{height: 100, width: 100}}
           resizeMode="center"
           source={{
-            uri: item?.images[0],
+            uri: item.images,
           }}
         />
       </View>
@@ -56,9 +47,9 @@ const ProductItem = props => {
           flex: 1,
           // marginHorizontal: 16,
         }}>
-        <Text>{item?.title}</Text>
+        <Text>{item.name}</Text>
         <Text>Size: M</Text>
-        <Text>Thành tiền: {item?.price}đ</Text>
+        <Text>Thành tiền: {item.price}đ</Text>
       </View>
       {/* tanggiam */}
       <View
@@ -120,6 +111,6 @@ const ProductItem = props => {
   );
 };
 
-export default ProductItem;
+export default MyOrderItem;
 
 const styles = StyleSheet.create({});

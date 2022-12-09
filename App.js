@@ -24,6 +24,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import GlobalState from './src/context/GlobalState';
 import ShopContext from './src/context/ShopContext';
+import MyOrder from './src/screens/MyOrder';
+import Address from './src/screens/Address';
 
 const Stack = createNativeStackNavigator();
 
@@ -122,12 +124,15 @@ const App = () => {
     <GlobalState>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen name="Login" component={MyTabs} />
+          <Stack.Screen name="Home" component={MyTabs} />
+          {/* <Stack.Screen name="Home" component={Home} /> */}
           <Stack.Screen name="Signup" component={Signup} />
           <Stack.Screen name="Product" component={Product} />
           <Stack.Screen name="Bill" component={Bill} />
           <Stack.Screen name="Addpay" component={Addpay} />
           <Stack.Screen name="Orderinfo" component={Orderinfo} />
+          <Stack.Screen name="MyOrder" component={MyOrder} />
+          <Stack.Screen name="Voucher" component={Voucher} />
         </Stack.Navigator>
       </NavigationContainer>
     </GlobalState>

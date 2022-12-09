@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -13,16 +13,20 @@ import {
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import {Colors} from '../constants/Colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import ShopContext from '../context/ShopContext';
 import ProductItem from './ProductItem';
 
 const Bill = () => {
   const navigation = useNavigation();
-  const {products, addProductToCart, cart} = useContext(ShopContext);
+  const {products, addProductToCart, cart: cartProp} = useContext(ShopContext);
+  const [cart, setCart] = useState(cartProp);
   let sumReduce = cart.reduce(function (previousValue, currentValue) {
     return previousValue + currentValue.quantity * currentValue.price;
   }, 0);
-  console.log('sumReduce', sumReduce);
+  useEffect(() => {
+    setCart(cartProp);
+  }, [cartProp]);
   return (
     <View
       style={{
@@ -71,8 +75,8 @@ const Bill = () => {
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => `key-${index.toString()}`}
         renderItem={({item, index}) => {
-          //  console.log('vitem', item);
-          return <ProductItem item={item} />;
+          // console.log('item', item);
+          return <ProductItem key={item?.id} item={item} />;
         }}
       />
 

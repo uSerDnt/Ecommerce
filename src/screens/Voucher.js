@@ -9,7 +9,7 @@ import React from 'react';
 import {Colors} from '../constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Buttons from '../components/Buttons';
-const Voucher = () => {
+const Voucher = ({navigation}) => {
   return (
     <View
       style={{
@@ -23,7 +23,7 @@ const Voucher = () => {
           height: 60,
           justifyContent: 'center',
         }}>
-        <Pressable onPress={() => console.log('click')}>
+        <Pressable onPress={() => navigation.goBack()}>
           <View
             style={{
               position: 'absolute',

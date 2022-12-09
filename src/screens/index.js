@@ -1,6 +1,4 @@
-export {default as Splash} from './Splash';
 export {default as Login} from './Login';
-export {default as Onboarding} from './Onboarding';
 export {default as Signup} from './Signup';
 export {default as Home} from './Home';
 export {default as Product} from './Product';
@@ -14,3 +12,4 @@ export {default as OrderY} from './OrderY';
 export {default as Voucher} from './Voucher';
 export {default as Orderinfo} from './Orderinfo';
 export {default as Bill} from './Bill';
+export {default as MyOrder} from './MyOrder';

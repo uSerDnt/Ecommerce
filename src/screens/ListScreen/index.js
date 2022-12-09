@@ -102,7 +102,7 @@ const OrderY = ({navigation}) => {
               fontWeight: 'bold',
               color: Colors.dark,
             }}>
-            Save all items
+            Sản phẩm yêu thích
           </Text>
         </View>
       </View>

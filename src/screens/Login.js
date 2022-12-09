@@ -14,12 +14,36 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Buttons from '../components/Buttons';
 import {useNavigation} from '@react-navigation/native';
 import {color} from 'react-native-reanimated';
-
+import axios from 'axios';
 const Login = () => {
   const navigate = useNavigation();
-
   const handleNavigateSignUp = () => {
     navigate.navigate('Signup');
+  };
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+
+  const handleLogin = async () => {
+    try {
+      const {data} = await axios.post(
+        'http://192.168.236.1:5000/api/user/login', //mongodb://localhost:27017
+        {
+          email: 'acmadnt@gmail.com',
+          password: '123456',
+          // email,
+          // password,
+        },
+      );
+      if (data.status === 'ok') {
+        navigate.navigate('Home', {accessToken: data.data.token});
+      }
+    } catch (error) {
+      // console.log(error.response.data);
+      console.log('____. error', error?.response);
+      setError(error.response.data.message);
+    }
   };
 
   return (
@@ -45,6 +69,8 @@ const Login = () => {
               }}>
               <Text style={styles.textact}>Email address</Text>
               <TextInput
+                value={email}
+                onChangeText={setEmail}
                 style={styles.edtact}
                 placeholder="Enter Email address"
               />
@@ -56,12 +82,15 @@ const Login = () => {
               }}>
               <Text style={styles.textact}>Password</Text>
               <TextInput
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
                 style={styles.edtact}
                 placeholder="Enter password"></TextInput>
             </View>
           </View>
           <View style={styles.viewlogin}>
-            <Buttons style={styles.login}>
+            <Buttons onPress={handleLogin} style={styles.login}>
               <Text style={styles.textlogin}>Login</Text>
             </Buttons>
           </View>

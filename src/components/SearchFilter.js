@@ -11,6 +11,7 @@ const SearchFilter = ({data, input, setInput}) => {
     <View>
       <FlatList
         data={data}
+        numColumns={2}
         renderItem={({item}) => {
           if (input === '') {
             return (
@@ -23,7 +24,7 @@ const SearchFilter = ({data, input, setInput}) => {
                     fontSize: 14,
                     fontWeight: 'bold',
                   }}>
-                  {item.name}
+                  {item.name},
                 </Text>
               </View>
             );
@@ -85,7 +86,9 @@ const SearchFilter = ({data, input, setInput}) => {
                       flexDirection: 'row',
                       alignItems: 'center',
                     }}>
-                    <Text style={styles.price}>{item.price} đ</Text>
+                    <Text style={[styles.price, {flex: 1}]}>
+                      {item.price} đ
+                    </Text>
 
                     <TouchableOpacity
                       activeOpacity={0.9}

@@ -20,15 +20,12 @@ const Search = ({navigation, value, onChangeText}) => {
   console.log('products', products);
   const [input, setInput] = useState('');
   console.log(input);
-  // const onChangeText = text => {
-  //   setSearchTerm(text);
-  //   fetchProductList(0, text);
-  // };
   return (
     <View
       style={{
         flex: 1,
         backgroundColor: Colors.gray,
+        marginHorizontal: 16,
       }}>
       {/* header */}
       <View
@@ -78,6 +75,7 @@ const Search = ({navigation, value, onChangeText}) => {
             width: 0,
             height: 4,
           },
+          height: 44,
           shadowOpacity: 0.32,
           shadowRadius: 5.46,
           elevation: 9,
@@ -91,17 +89,6 @@ const Search = ({navigation, value, onChangeText}) => {
           placeholder="Search any thing"
           placeholderTextColor="#d6d9df"
         />
-        <Pressable>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              color: Colors.dark,
-              fontSize: 14,
-              marginRight: 10,
-            }}>
-            Search
-          </Text>
-        </Pressable>
       </View>
       <SearchFilter data={products} input={input} setInput={setInput} />
     </View>

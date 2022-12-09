@@ -2,7 +2,7 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {Colors} from '../constants/Colors';
 
-const Button = ({on_press, btn_text, style, children}) => {
+const Button = ({onPress, btn_text, style, children}) => {
   return (
     <TouchableOpacity
       style={[
@@ -16,7 +16,7 @@ const Button = ({on_press, btn_text, style, children}) => {
         },
         style,
       ]}
-      onPress={on_press}>
+      onPress={onPress}>
       {children}
       {btn_text && (
         <Text

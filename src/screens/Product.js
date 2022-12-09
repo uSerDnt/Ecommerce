@@ -6,34 +6,69 @@ import {
   Pressable,
   Image,
 } from 'react-native';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import ItemOrder from './ListScreen/ListOrder';
 import ShopContext from '../context/ShopContext';
+import axios from 'axios';
 const Product = ({Home, route}) => {
-  const {productId} = route.params;
-
   const navigation = useNavigation();
-  const {products} = useContext(ShopContext);
-  const findProduct = products.find(e => e.id === productId);
-  const {name, price, images} = findProduct || {};
+  // const findProduct = products.find(e => e?.id === productId);
+  // const {name, price, images} = findProduct || {};
+  // const findProduct = products?.find(product => product.id === productId);
+  // const {title, price, images} = findProduct || {};
+  const [product, setProduct] = useState(null);
   const [selected, setSelected] = useState(undefined);
-  const data = [
-    {
-      size: 'XL',
-    },
-    {
-      size: 'L',
-    },
-    {
-      size: 'M',
-    },
-    {
-      size: 'S',
-    },
-  ];
+  const {
+    products,
+    addProductToCart,
+    cart: cartProp,
+    getAProduct,
+  } = useContext(ShopContext);
+  const {productId} = route.params;
+  useEffect(() => {
+    const getAProduct = async () => {
+      try {
+        const {data} = await axios.get(
+          `http://192.168.0.101:5000/api/product/${productId}`,
+        );
+        setProduct(data);
+        // console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAProduct();
+  }, [productId]);
+  // const getAProducts = async () => {
+  //   try {
+  //     const {data} = await axios.get(
+  //       `http://192.168.0.101:5000/api/product/${productId}`,
+  //     );
+  //     getProduct(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   getAProducts();
+  // }, []);
+  // const data = [
+  //   {
+  //     size: 'XL',
+  //   },
+  //   {
+  //     size: 'L',
+  //   },
+  //   {
+  //     size: 'M',
+  //   },
+  //   {
+  //     size: 'S',
+  //   },
+  // ];
   return (
     <View style={{flex: 1, backgroundColor: Colors.gray}}>
       {/* Header */}
@@ -87,7 +122,7 @@ const Product = ({Home, route}) => {
           }}
           resizeMode="contain"
           source={{
-            uri: images,
+            uri: product?.images[0],
           }}
         />
       </View>
@@ -98,41 +133,7 @@ const Product = ({Home, route}) => {
           paddingVertical: 10,
           paddingHorizontal: 50,
           justifyContent: 'space-around',
-        }}>
-        {/* {data.map((item, index) => {
-          return (
-            <TouchableOpacity
-              onPress={() => setSelected(index)}
-              style={[
-                {
-                  height: 40,
-                  width: 40,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 20,
-                  backgroundColor: Colors.primary,
-                },
-                selected === index
-                  ? {
-                      height: 40,
-                      width: 40,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      borderRadius: 20,
-                      backgroundColor: Colors.white,
-                    }
-                  : null,
-              ]}>
-              <Text
-                style={{
-                  color: Colors.dark,
-                }}>
-                {item.size}
-              </Text>
-            </TouchableOpacity>
-          );
-        })} */}
-      </View>
+        }}></View>
 
       {/* mo ta */}
       <View
@@ -164,7 +165,7 @@ const Product = ({Home, route}) => {
               fontWeight: 'bold',
               color: Colors.dark,
             }}>
-            Áo thun vàng
+            {product?.title}
           </Text>
 
           <View>
@@ -187,10 +188,7 @@ const Product = ({Home, route}) => {
             }}>
             Description
           </Text>
-          <Text style={{}}>
-            Sản phẩm mới nhất, hot nhất 2022. Chất liệu mát, thích hợp đi học đi
-            chơi, đi du lịch...
-          </Text>
+          <Text style={{}}>{product?.description}</Text>
         </View>
         <View
           style={{
@@ -213,15 +211,13 @@ const Product = ({Home, route}) => {
                 fontSize: 24,
                 fontWeight: 'bold',
               }}>
-              25.000đ
+              {product?.price}
             </Text>
           </View>
           <View>
             {/* Button */}
             <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('Bill', {product: route.params.product})
-              }
+              onPress={() => navigation.navigate('Bill')}
               style={{
                 height: 50,
                 width: 160,

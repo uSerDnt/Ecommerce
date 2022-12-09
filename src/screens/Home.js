@@ -8,133 +8,160 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Colors} from '../constants/Colors';
 import Buttons from '../components/Buttons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Product from './Product';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import ShopContext from '../context/ShopContext';
 import GlobalState from '../context/GlobalState';
-
-// const DATA = [
-//   {
-//     id: 1,
-//     name: 'Áo thun vàng',
-//     images:
-//       'https://tse3.mm.bing.net/th?id=OIP.os71ZtsT8mkDlaykWbUGeQHaJ4&pid=Api&P=0',
-//     price: 120,
-//     rating: 4.5,
-//   },
-//   {
-//     id: 2,
-//     name: 'Áo thun đen',
-//     images:
-//       'https://tse4.mm.bing.net/th?id=OIP.bJ48jmA9X9y9bIiN6VBARgHaII&pid=Api&P=0',
-//     price: 120,
-//     rating: 2.0,
-//   },
-//   {
-//     id: 3,
-//     name: 'Áo khoác',
-//     images:
-//       'https://tse2.mm.bing.net/th?id=OIP.W4c_pkm0jjlf8KvJt_BCXgHaHa&pid=Api&P=0',
-//     price: 120,
-//     rating: 4.5,
-//   },
-//   {
-//     id: 4,
-//     name: 'Áo nam',
-//     images:
-//       'https://tse3.mm.bing.net/th?id=OIP.oxk-NL-1_JfJUXFenTSzVAHaHK&pid=Api&P=0',
-//     price: 120,
-//     rating: 4.0,
-//   },
-// ];
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 const Home = ({navigation, props}) => {
-  const {products, addProductToCart, cart} = useContext(ShopContext);
-  console.log('cart', cart);
-  const renderItem = ({item}) => (
-    <View
-      style={{
-        borderRadius: 10,
-        backgroundColor: 'white',
-        marginRight: 16,
-        minWidth: Dimensions.get('window').width / 2 - 24,
-      }}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Product', {productId: item.id})}>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Image
-            style={{
-              height: 120,
-              width: '90%',
-              marginVertical: 10,
-              resizeMode: 'contain',
-            }}
-            source={{
-              uri: item.images,
-            }}
-          />
-        </View>
-      </TouchableOpacity>
+  const {
+    products,
+    addProductToCart,
+    cart: cartProp,
+    getAllProduct,
+  } = useContext(ShopContext);
+  const [cart, setCart] = useState([]);
+  useEffect(() => {
+    setCart(cartProp);
+  }, [cartProp]);
+  const addtocart = async id => {
+    let itemArray = await AsyncStorage.getItem('@cartItems');
+    itemArray = JSON.parse(itemArray);
+    if (itemArray) {
+      let array = itemArray;
+      array.push(id);
+
+      try {
+        await AsyncStorage.setItem('@cartItems', JSON.stringify(array));
+      } catch (error) {
+        return error;
+      }
+    } else {
+      let array = [];
+      array.push(id);
+      try {
+        await AsyncStorage.setItem('@cartItems', JSON.stringify(array));
+      } catch (error) {
+        return error;
+      }
+    }
+  };
+  const [shouldShow, setshouldShow] = useState(false);
+
+  const renderItem = ({item}) => {
+    return (
       <View
         style={{
-          marginHorizontal: 12,
+          borderRadius: 10,
+          backgroundColor: 'white',
+          marginRight: 16,
+          minWidth: Dimensions.get('window').width / 2 - 24,
         }}>
-        <Text
-          style={{
-            color: Colors.dark,
-          }}>
-          {item.name}
-        </Text>
-        {/* rating */}
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <FontAwesome name="star" size={16} color={Colors.primary} />
-          <Text style={{fontWeight: 'bold', color: Colors.dark}}>
-            {item.rating}
-          </Text>
-        </View>
-
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Product', {productId: item?._id})
+          }>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              style={{
+                height: 120,
+                width: '90%',
+                marginVertical: 10,
+                resizeMode: 'contain',
+              }}
+              source={{
+                uri: item?.images[0],
+              }}
+            />
+          </View>
+        </TouchableOpacity>
         <View
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
+            marginHorizontal: 12,
           }}>
-          <Text style={styles.price}>{item.price} đ</Text>
-
-          <TouchableOpacity
-            activeOpacity={0.9}
-            onPress={() => addProductToCart(item)}
+          <Text
             style={{
-              height: 30,
-              backgroundColor: Colors.primary,
-              // flex: 1,
-              borderRadius: 10,
-              alignItems: 'center',
-              flexDirection: 'row',
-              paddingHorizontal: 8,
+              color: Colors.dark,
             }}>
-            <FontAwesome name="heart-o" size={16} />
-            <Text
-              style={{
-                color: Colors.dark,
-                fontWeight: 'bold',
-                fontSize: 12,
-                marginLeft: 8,
-              }}>
-              Add Cart
+            {item?.title}
+          </Text>
+          {/* rating */}
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <FontAwesome name="star" size={16} color={Colors.primary} />
+            <Text style={{fontWeight: 'bold', color: Colors.dark}}>
+              {item?.ratings?.[0]?.star}
             </Text>
-          </TouchableOpacity>
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Text style={styles.price}>{item?.price} đ</Text>
+
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => {
+                // console.log(item);
+                addProductToCart(item);
+                // addtocart(item);
+              }}
+              style={{
+                height: 30,
+                backgroundColor: Colors.primary,
+                // flex: 1,
+                borderRadius: 10,
+                alignItems: 'center',
+                flexDirection: 'row',
+                paddingHorizontal: 8,
+              }}>
+              <FontAwesome name="heart-o" size={16} />
+              <Text
+                style={{
+                  color: Colors.dark,
+                  fontWeight: 'bold',
+                  fontSize: 12,
+                  marginLeft: 8,
+                }}>
+                Add Cart
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  };
+  const route = useRoute();
+  const {accessToken} = route.params || {};
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const {data} = await axios.get(
+          'http://192.168.22.100:5000/api/product',
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${accessToken}`,
+            },
+          },
+        );
+        getAllProduct(data);
+      } catch (error) {}
+    };
+    getProducts();
+  }, []);
+  // console.log('products', products);
   return (
     <FlatList
       ListHeaderComponent={
@@ -165,16 +192,20 @@ const Home = ({navigation, props}) => {
               justifyContent: 'space-between',
               paddingBottom: 6,
             }}>
-            <TextInput
-              style={{
-                backgroundColor: Colors.white,
-                borderRadius: 10,
-                height: 40,
-                flex: 1,
-              }}
-              placeholder="Find product"
-            />
-            <TouchableOpacity onPress={() => console.log('click')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+              <View
+                style={{
+                  backgroundColor: Colors.white,
+                  borderRadius: 10,
+                  height: 40,
+                  width: 300,
+                  justifyContent: 'center',
+                  paddingLeft: 10,
+                }}>
+                <Text style={{fontSize: 15}}>Find product</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setshouldShow(!shouldShow)}>
               <View
                 style={{
                   alignItems: 'center',
@@ -222,6 +253,74 @@ const Home = ({navigation, props}) => {
               Xem tất cả
             </Text>
           </View>
+          {shouldShow ? (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                height: 30,
+              }}>
+              <View
+                style={{
+                  backgroundColor: Colors.primary,
+                  borderRadius: 10,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 80,
+                }}>
+                <TouchableOpacity>
+                  <Text
+                    style={{
+                      color: Colors.dark,
+                      fontWeight: '400',
+                      fontSize: 20,
+                      paddingHorizontal: 6,
+                    }}>
+                    Áo
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  backgroundColor: Colors.white,
+                  borderRadius: 10,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 80,
+                }}>
+                <TouchableOpacity>
+                  <Text
+                    style={{
+                      color: Colors.dark,
+                      fontWeight: '400',
+                      fontSize: 20,
+                      paddingHorizontal: 6,
+                    }}>
+                    Quần
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  backgroundColor: Colors.white,
+                  borderRadius: 10,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 100,
+                }}>
+                <TouchableOpacity>
+                  <Text
+                    style={{
+                      color: Colors.dark,
+                      fontWeight: '400',
+                      fontSize: 20,
+                    }}>
+                    Phụ kiện
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          ) : null}
         </View>
       }
       columnWrapperStyle={{marginTop: 20}}
@@ -231,7 +330,7 @@ const Home = ({navigation, props}) => {
       }}
       renderItem={renderItem}
       numColumns={2}
-      keyExtractor={item => item.id}
+      keyExtractor={(item, index) => `key-${index.toString()}`}
     />
   );
 };
